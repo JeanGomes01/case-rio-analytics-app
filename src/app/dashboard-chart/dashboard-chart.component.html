@@ -1,11 +1,13 @@
-<div>
-  <ngx-charts-advanced-pie-chart
-    class="text-white"
-    [view]="view"
+<div class="mb-10 w-full">
+  <ngx-charts-pie-chart
+    class="text-white mb-5"
     [results]="single"
-    [scheme]="colorScheme"
+    [scheme]="colorScheme.name"
     [gradient]="true"
     [animations]="true"
+    [doughnut]="true"
+    [legend]="true"
+    [legendPosition]="legendPosition"
   >
-  </ngx-charts-advanced-pie-chart>
+  </ngx-charts-pie-chart>
 </div>

@@ -1,23 +1,25 @@
 <div class="w-full h-full">
-  <div class="m-[20px]" *ngIf="filteredCountries.length > 0; else noResults">
-    <!-- Campo de Busca -->
+  <!-- <div class="m-[20px]" *ngIf="filteredCountries.length > 0; else noResults"> -->
+  <!-- Campo de Busca -->
 
-    <!-- Gráfico de Barras -->
-    <!-- <ngx-charts-advanced-pie-chart
+  <!-- Gráfico de Barras -->
+  <!-- <ngx-charts-advanced-pie-chart
       class="text-white"
       [view]="view"
       [scheme]="colorScheme"
       [results]="single"
     >
     </ngx-charts-advanced-pie-chart> -->
-  </div>
+  <!-- </div> -->
 
-  <div class="">
+  <div>
     <div class="m-[20px] flex flex-col">
       <!-- Cabeçalho com título e input de busca lado a lado -->
       <div class="flex justify-between items-center mb-4">
         <h1 class="text-[24px] text-white">Countries</h1>
-        <div
+
+        <!--Input -->
+        <!-- <div
           class="flex justify-between p-2 border rounded bg-gray-500 text-gray-400 w-1/2 max-w-[369px]"
         >
           <input
@@ -37,7 +39,7 @@
             [img]="Search"
             class="text-[#CAC9C9]"
           ></i-lucide>
-        </div>
+        </div> -->
       </div>
 
       <!-- Tabela de países -->
@@ -53,7 +55,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let country of paginatedCountries">
+            <tr *ngFor="let country of countries">
               <td>{{ country.name.common }}</td>
               <td>{{ country.capital }}</td>
               <td>{{ country.region }}</td>
@@ -70,16 +72,33 @@
         </table>
       </div>
     </div>
+
+    <!--Seletor de quantidade itens por páginas -->
     <!-- <div class="mb-4">
-      <h1 class="text-2xl font-bold text-white">
+      <label for="pageSelect" class="text-white ml-3 mr-3">Página:</label>
+      <select
+        class="bg-[#2B3342] rounded text-[#CAC9C9] w-20"
+        id="pageSelect"
+        [(ngModel)]="currentPage"
+        (change)="setPage(currentPage)"
+      >
+        <option *ngFor="let page of getLimitedPages()" [value]="page">
+          {{ page }}
+        </option>
+      </select>
+    </div> -->
+
+    <!--Total dos países-->
+    <!-- <div class="mb-4">
+      <h1 class="text-2xl font-bold text-white ml-3">
         Total de Países: {{ filteredCountries.length }}
       </h1>
     </div> -->
 
-    <ng-template #noResults>
+    <!-- <ng-template #noResults>
       <div class="text-center text-gray-500 mt-4">
         <p>Nenhum resultado encontrado para "{{ searchTerm }}"</p>
       </div>
-    </ng-template>
+    </ng-template> -->
   </div>
 </div>

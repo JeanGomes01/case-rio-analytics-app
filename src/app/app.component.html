@@ -1,34 +1,40 @@
 <main class="h-screen w-screen flex flex-col p-4">
-  <section class="flex flex-col md:flex-row gap-3 justify-center">
+  <section class="flex flex-col md:flex-row gap-3 justify-center mb-10">
     <select
       name=""
       id=""
       class="rounded bg-[#2B3342] p-2 text-white md:w-[334px]"
     >
-      <option checked value="">Currency</option>
+      <option checked value="" (change)="selectRegion()">
+        Select a Region
+      </option>
+      <option [value]="region" *ngFor="let region of regions$ | async">
+        {{ region }}
+      </option>
     </select>
     <select
       name=""
       id=""
       class="rounded bg-[#2B3342] p-2 text-white md:w-[334px]"
     >
-      <option checked value="">Region</option>
-    </select>
-    <select
-      name=""
-      id=""
-      class="rounded bg-[#2B3342] p-2 text-white md:w-[334px]"
-    >
-      <option checked value="">Sub Region</option>
+      <option checked value="" (change)="selectSubRegion()">
+        Select a Subregion
+      </option>
+      <option [value]="subregion" *ngFor="let subregion of subregions$ | async">
+        {{ subregion }}
+      </option>
     </select>
   </section>
-  <section class="mt-5 flex justify-center">
+
+  <section class="mt-5 flex justify-center items-center">
     <img src="/logo.png" alt="Logo da empresa" />
   </section>
-  <section class="mt-20 border rounded border-[#2B3342]">
+
+  <section class="mt-20 border rounded border-[#2B3342] w-full">
     <app-dashboard-chart></app-dashboard-chart>
   </section>
+
   <section class="mt-20 border rounded border-[#2B3342]">
-    <app-country-list></app-country-list>
+    <app-country-list [countries]="countries$ | async"></app-country-list>
   </section>
 </main>

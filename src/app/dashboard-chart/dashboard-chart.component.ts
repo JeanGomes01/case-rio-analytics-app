@@ -1,69 +1,78 @@
 import { Component, OnInit } from '@angular/core';
-import { Color, NgxChartsModule, ScaleType } from '@swimlane/ngx-charts';
-import { CountryService } from '../services/country.service';
+import {
+  Color,
+  LegendPosition,
+  NgxChartsModule,
+  ScaleType,
+} from '@swimlane/ngx-charts';
+import { CountryStoreService } from '../services/country-store.service';
 
 @Component({
   selector: 'app-dashboard-chart',
   standalone: true,
   imports: [NgxChartsModule],
   templateUrl: './dashboard-chart.component.html',
-  styleUrl: './dashboard-chart.component.scss',
+  styleUrls: ['./dashboard-chart.component.scss'],
 })
 export class DashboardChartComponent implements OnInit {
   countries: any[] = [];
   currentPage: number = 1;
-  itemsPerPage: number = 4;
-  maxVisiblePages: number = 5;
+  itemsPerPage: number = 5; // Número de países por página
   totalPages: number = 0;
-
   searchTerm: string = '';
 
-  view: [number, number] = [500, 300];
   single: any[] = [];
+  legendPosition: LegendPosition = LegendPosition.Below;
 
   colorScheme: Color = {
-    name: 'cool',
+    name: 'vivid',
     selectable: true,
     group: ScaleType.Ordinal,
-    domain: ['#4961e1', '#2c0eae', '#f44336', '#ffb74d', '#00aaff'],
+    domain: [], // Defina as cores conforme necessário
   };
-  constructor(private countryService: CountryService) {}
+
+  constructor(private countryStoreService: CountryStoreService) {}
 
   ngOnInit(): void {
-    this.countryService.getCountries().subscribe((data) => {
+    this.countryStoreService.getCountries().subscribe((data) => {
+      console.log('Dados recebidos no componente:', data); // Adicione esta linha
       this.countries = data.sort((a: any, b: any) =>
         a.name.common.localeCompare(b.name.common)
       );
       this.updateChartsAndPagination();
     });
+
+    this.countryStoreService.chartData$.subscribe((data) => {
+      this.single = data;
+      console.log('Dados do gráfico atualizados', this.single);
+    });
   }
 
   get filteredCountries() {
-    const matchedCountries = this.countries.filter((country) => {
-      const countryNameMatches = country.name.common
-        .toLowerCase()
-        .includes(this.searchTerm.toLowerCase());
-
-      // const capitalMatches =
-      //   country.capital &&
-      //   country.capital.toLowerCase().includes(this.searchTerm.toLowerCase());
-
-      return countryNameMatches;
-    });
-
-    return matchedCountries.length > 0 ? matchedCountries : this.countries;
+    return this.countries.filter((country) =>
+      country.name.common.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
   }
 
   updateChartsAndPagination() {
-    // Atualiza a total de páginas com base nos países filtrados
     this.totalPages = Math.ceil(
       this.filteredCountries.length / this.itemsPerPage
     );
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
 
-    // Atualiza os dados do gráfico com base nos países filtrados
-    this.single = this.filteredCountries.map((country) => ({
+    const visibleCountries = this.filteredCountries.slice(startIndex, endIndex);
+    this.single = visibleCountries.map((country) => ({
       name: country.name.common,
       value: country.population,
     }));
+
+    console.log(this.single); // Adicione isso para depuração
+  }
+
+  setPage(page: number) {
+    this.currentPage = page;
+    console.log('Mudou para a página:', page); // Adicione esta linha
+    this.updateChartsAndPagination();
   }
 }
