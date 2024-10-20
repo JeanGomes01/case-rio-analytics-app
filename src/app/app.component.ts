@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { CountryListComponent } from './country-list/country-list.component';
+import { DashboardChartComponent } from './dashboard-chart/dashboard-chart.component';
 import { CountryStoreService } from './services/country-store.service';
 import { CountryService } from './services/country.service';
 
@@ -13,7 +14,7 @@ import { CountryService } from './services/country.service';
   imports: [
     RouterOutlet,
     CountryListComponent,
-    // DashboardChartComponent,
+    DashboardChartComponent,
     CommonModule,
   ],
   templateUrl: './app.component.html',
@@ -22,6 +23,7 @@ import { CountryService } from './services/country.service';
 export class AppComponent implements OnInit {
   title = 'case-rio-analytics-app';
   countries$: Observable<any[]>;
+  currentPage: number = 1;
 
   constructor(private countryService: CountryService) {}
 

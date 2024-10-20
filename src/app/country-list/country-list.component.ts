@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { Color, NgxChartsModule, ScaleType } from '@swimlane/ngx-charts';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { LucideAngularModule, Search } from 'lucide-angular';
 
 @Component({
@@ -18,6 +18,8 @@ export class CountryListComponent implements OnInit {
       return;
     }
     const _countries = countries;
+
+    this.countriesQuantity = _countries.length;
     this.totalPages = _countries.length / this.itemsPerPage;
     this.pages = Array.from(
       { length: this.totalPages },
@@ -32,6 +34,7 @@ export class CountryListComponent implements OnInit {
   @Output() searchTermEvent: EventEmitter<string> = new EventEmitter<string>();
   @Output() currentPageEvent: EventEmitter<number> = new EventEmitter<number>();
 
+  countriesQuantity: number = 0;
   pages: number[] = [];
   totalPages: number = 0;
   itemsPerPage: number = 5;
@@ -39,15 +42,6 @@ export class CountryListComponent implements OnInit {
 
   countries: any[] = [];
   readonly Search = Search;
-
-  view: [number, number] = [500, 300];
-  single: any[] = [];
-  colorScheme: Color = {
-    name: 'cool',
-    selectable: true,
-    group: ScaleType.Ordinal,
-    domain: ['#4961e1', '#2c0eae', '#f44336', '#ffb74d', '#00aaff'],
-  };
 
   constructor() {}
 
