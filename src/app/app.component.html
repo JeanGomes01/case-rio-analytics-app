@@ -1,22 +1,28 @@
-<main class="h-screen w-screen flex flex-col p-4">
-  <section class="flex justify-between">
-    <section class="flex justify-center items-center">
+<main class="h-full w-full flex flex-col p-4 gap-4">
+  <section class="flex flex-col md:flex-row gap-4">
+    <section
+      class="flex justify-center items-center flex-1 border rounded border-[#2B3342]"
+    >
       <img src="/logo.png" alt="Logo da empresa" />
     </section>
 
-    <section class="">
-      <h1 class="text-white">Chart</h1>
-      <app-dashboard-chart
-        [setData]="{
-          countries: countries$ | async,
-          itemsPerPage: 5,
-          currentPage: currentPage
-        }"
-      ></app-dashboard-chart>
+    <section class="border rounded border-[#2B3342] flex-1">
+      <h1 class="text-[#27aeaf] font-bold text-[28px] p-4">
+        <span class="text-[#CAC9C9]">C</span>hart
+      </h1>
+      <div class="flex justify-center items-center">
+        <app-dashboard-chart
+          [setData]="{
+            countries: countries$ | async,
+            itemsPerPage: 5,
+            currentPage: currentPage
+          }"
+        ></app-dashboard-chart>
+      </div>
     </section>
   </section>
 
-  <section class="mt-10 border rounded border-[#2B3342]">
+  <section class="border rounded border-[#2B3342] p-5">
     <app-country-list
       [setCountries]="countries$ | async"
       (searchTermEvent)="filterCountries($event)"

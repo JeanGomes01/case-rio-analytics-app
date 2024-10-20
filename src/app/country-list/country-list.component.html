@@ -1,77 +1,72 @@
-<div class="w-full h-full">
-  <!-- <div class="m-[20px]" *ngIf="filteredCountries.length > 0; else noResults"> -->
-  <!-- Campo de Busca -->
+<div class="w-full h-full flex flex-col gap-4">
+  <div class="flex justify-between items-center">
+    <h1 class="text-[#27aeaf] font-bold text-[28px]">
+      <span class="text-[#CAC9C9]">C</span>ountries
+    </h1>
 
-  <!-- Gráfico de Barras -->
-  <!-- <ngx-charts-advanced-pie-chart
-      class="text-white"
-      [view]="view"
-      [scheme]="colorScheme"
-      [results]="single"
+    <div
+      class="flex self-end justify-between p-2 rounded bg-[#2B3342] text-gray-400 w-1/2 max-w-[369px]"
     >
-    </ngx-charts-advanced-pie-chart> -->
-  <!-- </div> -->
+      <input
+        type="text"
+        placeholder="Search..."
+        (input)="filterCountries($event)"
+        class="flex-1 bg-transparent w-full outline-none bg-[#2B3342] rounded text-[#CAC9C9]"
+      />
+      <i-lucide
+        data-lucide="search"
+        [img]="Search"
+        class="text-[#CAC9C9]"
+      ></i-lucide>
+    </div>
+  </div>
 
-  <div>
-    <div class="m-[20px] flex flex-col">
-      <!-- Cabeçalho com título e input de busca lado a lado -->
-      <div class="flex justify-between items-center mb-4">
-        <h1 class="text-[24px] text-white">Countries</h1>
+  <div class="w-full overflow-x-auto overflow-y-hidden">
+    <table class="w-full border-y-1 border-2 text-[#CAC9C9]">
+      <thead>
+        <tr class="p-[10px] text-left border-1 bg-[#2B3342]">
+          <th>Name</th>
+          <th>Capital</th>
+          <th>Region</th>
+          <th>Population</th>
+          <th>Flag</th>
+        </tr>
+      </thead>
+      @if (countries.length) {
+      <tbody>
+        <tr *ngFor="let country of countries">
+          <td>{{ country.name.common }}</td>
+          <td>{{ country.capital }}</td>
+          <td>{{ country.region }}</td>
+          <td>{{ country.population }}</td>
+          <td>
+            <img
+              [src]="country.flags.png"
+              alt="Bandeira de {{ country.name.common }}"
+              class="rounded p-[5px] h-8 w-10"
+            />
+          </td>
+        </tr>
+      </tbody>
+      } @else {
+      <tbody>
+        <tr>
+          <td colspan="5">Content not found</td>
+        </tr>
+      </tbody>
+      }
+    </table>
+  </div>
 
-        <!--Input -->
-        <div
-          class="flex justify-between p-2 border rounded bg-gray-500 text-gray-400 w-1/2 max-w-[369px]"
-        >
-          <input
-            type="text"
-            placeholder="Search..."
-            (input)="filterCountries($event)"
-            class="flex-1 bg-transparent w-full outline-none"
-          />
-          <i-lucide
-            data-lucide="search"
-            [img]="Search"
-            class="text-[#CAC9C9]"
-          ></i-lucide>
-        </div>
-      </div>
-
-      <!-- Tabela de países -->
-      <div class="w-full overflow-x-auto overflow-y-hidden">
-        <table class="w-full border-y-1 border-2 my-2 text-[#CAC9C9]">
-          <thead>
-            <tr class="p-[10px] text-left border-1 bg-[#2B3342]">
-              <th>Name</th>
-              <th>Capital</th>
-              <th>Region</th>
-              <th>Population</th>
-              <th>Flag</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let country of countries">
-              <td>{{ country.name.common }}</td>
-              <td>{{ country.capital }}</td>
-              <td>{{ country.region }}</td>
-              <td>{{ country.population }}</td>
-              <td>
-                <img
-                  [src]="country.flags.png"
-                  alt="Bandeira de {{ country.name.common }}"
-                  class="rounded p-[5px] h-8 w-10"
-                />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+  <div class="flex justify-between items-center">
+    <div class="text-[20px] font-bold text-[#C9C9C9] md:text-nowrap">
+      Total of Countries: {{ countriesQuantity }}
     </div>
 
-    <!--Seletor de quantidade itens por páginas -->
-    <div class="mb-4">
-      <label for="pageSelect" class="text-white ml-3 mr-3">Page:</label>
+    <div class="flex w-full justify-end items-center gap-4">
+      <label for="pageSelect" class="text-[#CAC9C9]">Page:</label>
       <select
-        class="bg-[#2B3342] rounded text-[#CAC9C9] w-20"
+        class="bg-[#2B3342] rounded text-[#CAC9C9] w-20 p-2"
         id="pageSelect"
         (change)="selectPage($event)"
       >
@@ -80,18 +75,5 @@
         </option>
       </select>
     </div>
-
-    <!--Total dos países-->
-    <div class="mb-4">
-      <h1 class="text-2xl font-bold text-white ml-3">
-        Total of Countries: {{ countriesQuantity }}
-      </h1>
-    </div>
-
-    <!-- <ng-template #noResults>
-      <div class="text-center text-gray-500 mt-4">
-        <p>Nenhum resultado encontrado para "{{ searchTerm }}"</p>
-      </div>
-    </ng-template> -->
   </div>
 </div>

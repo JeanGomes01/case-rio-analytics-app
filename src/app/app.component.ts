@@ -41,11 +41,6 @@ export class AppComponent implements OnInit {
           const countryNameMatches = country.name.common
             .toLowerCase()
             .includes(searchTerm.toLowerCase());
-
-          // const capitalMatches =
-          //   country.capital &&
-          //   country.capital.toLowerCase().includes(searchTerm.toLowerCase());
-
           return countryNameMatches;
         });
       })

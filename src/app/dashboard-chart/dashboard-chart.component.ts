@@ -30,14 +30,12 @@ export class DashboardChartComponent implements OnInit {
       name: country.name.common,
       value: country.population,
     }));
-    console.log(this.single);
   }
   itemsPerPage: number = 5;
 
   countries: any[] = [];
   single: any[] = [];
 
-  view: [700, 300];
   LegendPosition: LegendPosition.Below;
 
   colorScheme: Color = {
