@@ -1,13 +1,12 @@
 <main class="h-screen w-screen flex flex-col p-4">
-  <section class="flex flex-col md:flex-row gap-3 justify-center mb-10">
+  <!-- <section class="flex flex-col md:flex-row gap-3 justify-center mb-10">
     <select
       name=""
       id=""
       class="rounded bg-[#2B3342] p-2 text-white md:w-[334px]"
+      (change)="selectRegion($event)"
     >
-      <option checked value="" (change)="selectRegion()">
-        Select a Region
-      </option>
+      <option checked value="">Select a Region</option>
       <option [value]="region" *ngFor="let region of regions$ | async">
         {{ region }}
       </option>
@@ -16,25 +15,28 @@
       name=""
       id=""
       class="rounded bg-[#2B3342] p-2 text-white md:w-[334px]"
+      (change)="selectSubRegion($event)"
     >
-      <option checked value="" (change)="selectSubRegion()">
-        Select a Subregion
-      </option>
+      <option checked value="">Select a Subregion</option>
       <option [value]="subregion" *ngFor="let subregion of subregions$ | async">
         {{ subregion }}
       </option>
     </select>
-  </section>
+  </section> -->
 
   <section class="mt-5 flex justify-center items-center">
     <img src="/logo.png" alt="Logo da empresa" />
   </section>
 
   <section class="mt-20 border rounded border-[#2B3342] w-full">
-    <app-dashboard-chart></app-dashboard-chart>
+    <!-- <app-dashboard-chart></app-dashboard-chart> -->
   </section>
 
   <section class="mt-20 border rounded border-[#2B3342]">
-    <app-country-list [countries]="countries$ | async"></app-country-list>
+    <app-country-list
+      [setCountries]="countries$ | async"
+      (searchTermEvent)="filterCountries($event)"
+      (currentPageEvent)="filterCountries()"
+    ></app-country-list>
   </section>
 </main>

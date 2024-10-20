@@ -19,27 +19,21 @@
         <h1 class="text-[24px] text-white">Countries</h1>
 
         <!--Input -->
-        <!-- <div
+        <div
           class="flex justify-between p-2 border rounded bg-gray-500 text-gray-400 w-1/2 max-w-[369px]"
         >
           <input
             type="text"
             placeholder="Search..."
-            [(ngModel)]="searchTerm"
-            (input)="updateChartsAndPagination()"
-            class="flex-1 bg-transparent w-full outline-none
-            {{
-              filteredCountries.length === 0 && searchTerm
-                ? 'border-red-500'
-                : ''
-            }}"
+            (input)="filterCountries($event)"
+            class="flex-1 bg-transparent w-full outline-none"
           />
           <i-lucide
             data-lucide="search"
             [img]="Search"
             class="text-[#CAC9C9]"
           ></i-lucide>
-        </div> -->
+        </div>
       </div>
 
       <!-- Tabela de países -->
@@ -74,19 +68,18 @@
     </div>
 
     <!--Seletor de quantidade itens por páginas -->
-    <!-- <div class="mb-4">
+    <div class="mb-4">
       <label for="pageSelect" class="text-white ml-3 mr-3">Página:</label>
       <select
         class="bg-[#2B3342] rounded text-[#CAC9C9] w-20"
         id="pageSelect"
-        [(ngModel)]="currentPage"
-        (change)="setPage(currentPage)"
+        (change)="selectPage($event)"
       >
-        <option *ngFor="let page of getLimitedPages()" [value]="page">
+        <option *ngFor="let page of pages" [value]="">
           {{ page }}
         </option>
       </select>
-    </div> -->
+    </div>
 
     <!--Total dos países-->
     <!-- <div class="mb-4">

@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+
 import { Color, NgxChartsModule, ScaleType } from '@swimlane/ngx-charts';
 import { LucideAngularModule, Search } from 'lucide-angular';
-import { CountryStoreService } from '../services/country-store.service';
 
 @Component({
   selector: 'app-country-list',
@@ -13,14 +13,32 @@ import { CountryStoreService } from '../services/country-store.service';
   styleUrls: ['./country-list.component.scss'],
 })
 export class CountryListComponent implements OnInit {
-  @Input() countries: any[] | null = [];
+  @Input() set setCountries(countries: any[] | null) {
+    if (!countries?.length) {
+      return;
+    }
+    const _countries = countries;
+    this.totalPages = _countries.length / this.itemsPerPage;
+    this.pages = Array.from(
+      { length: this.totalPages },
+      (_, index) => index + 1
+    );
+    this.countries = this.getItemsToShow(
+      _countries,
+      this.itemsPerPage,
+      this.currentPage
+    );
+  }
+  @Output() searchTermEvent: EventEmitter<string> = new EventEmitter<string>();
+  @Output() currentPageEvent: EventEmitter<number> = new EventEmitter<number>();
 
+  pages: number[] = [];
+  totalPages: number = 0;
+  itemsPerPage: number = 5;
+  currentPage: number = 1;
+
+  countries: any[] = [];
   readonly Search = Search;
-  // currentPage: number = 1;
-  // itemsPerPage: number = 5; //Mostrar 5 países por vez
-  // maxVisiblePages: number = 50; // Exibir apenas 5 países por página
-  // totalPages: number = 0;
-  // searchTerm: string = '';
 
   view: [number, number] = [500, 300];
   single: any[] = [];
@@ -31,74 +49,28 @@ export class CountryListComponent implements OnInit {
     domain: ['#4961e1', '#2c0eae', '#f44336', '#ffb74d', '#00aaff'],
   };
 
-  constructor(private countryStoreService: CountryStoreService) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    // // Carregar países na inicialização
-    // this.countryStoreService.getCountries().subscribe((data) => {
-    //   this.countries = data.sort((a: any, b: any) =>
-    //     a.name.common.localeCompare(b.name.common)
-    //   );
-    //   this.updateChartsAndPagination();
-    // });
+  ngOnInit(): void {}
+
+  filterCountries(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    this.searchTermEvent.emit(target.value);
   }
 
-  // updateChartsAndPagination() {
-  //   this.totalPages = Math.ceil(
-  //     this.filteredCountries.length / this.itemsPerPage
-  //   );
-  //   const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-  //   const endIndex = startIndex + this.itemsPerPage;
+  getItemsToShow(
+    countries: any,
+    itemsPerPage: number,
+    currentPage: number
+  ): any[] {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return countries.slice(startIndex, endIndex);
+  }
 
-  //   const visibleCountries = this.filteredCountries.slice(startIndex, endIndex);
-  //   this.single = visibleCountries.map((country) => ({
-  //     name: country.name.common,
-  //     value: country.population,
-  //   }));
-
-  //   this.countryStoreService.updateChartData(this.single);
-  //   console.log('Dados do gráfico:', this.single); // Adicione esta linha
-  // }
-
-  // onPageChange() {
-  //   // Atualiza a tabela de acordo com a página selecionada
-  //   this.updateChartsAndPagination();
-  // }
-
-  // get paginatedCountries() {
-  //   const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-  //   return this.filteredCountries.slice(
-  //     startIndex,
-  //     startIndex + this.itemsPerPage
-  //   );
-  // }
-
-  // getLimitedPages() {
-  //   const pages = [];
-  //   for (
-  //     let i = 1;
-  //     i <= Math.ceil(this.filteredCountries.length / this.itemsPerPage);
-  //     i++
-  //   ) {
-  //     pages.push(i);
-  //   }
-  //   return pages.slice(0, this.maxVisiblePages);
-  // }
-
-  // prevPage() {
-  //   if (this.currentPage > 1) {
-  //     this.currentPage--;
-  //   }
-  // }
-
-  // nextPage() {
-  //   if (this.currentPage < this.totalPages) {
-  //     this.currentPage++;
-  //   }
-  // }
-
-  // setPage(page: number) {
-  //   this.currentPage = page;
-  //   this.updateChartsAndPagination(); // Adicione esta linha
-  // }
+  selectPage(event: Event): void {
+    const select = event.target as HTMLSelectElement;
+    this.currentPage = Number(select.value);
+    this.currentPageEvent.emit(this.currentPage);
+  }
 }

@@ -1,9 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { CountryListComponent } from './country-list/country-list.component';
-import { DashboardChartComponent } from './dashboard-chart/dashboard-chart.component';
 import { CountryStoreService } from './services/country-store.service';
 import { CountryService } from './services/country.service';
 
@@ -14,7 +13,7 @@ import { CountryService } from './services/country.service';
   imports: [
     RouterOutlet,
     CountryListComponent,
-    DashboardChartComponent,
+    // DashboardChartComponent,
     CommonModule,
   ],
   templateUrl: './app.component.html',
@@ -23,52 +22,47 @@ import { CountryService } from './services/country.service';
 export class AppComponent implements OnInit {
   title = 'case-rio-analytics-app';
   countries$: Observable<any[]>;
-  regions$: Observable<string[]>;
-  subregions$: Observable<string[]>;
 
-  constructor(
-    private countryService: CountryService,
-    private countryStoresService: CountryStoreService
-  ) {}
+  constructor(private countryService: CountryService) {}
 
   ngOnInit(): void {
     this.listCountries();
-    this.listRegions();
-    this.listSubRegions();
   }
 
-  listCountries(): void {
-    this.countries$ = this.countryService.getCountries();
+  listCountries(searchTerm?: string): void {
+    this.countries$ = this.countryService.getCountries().pipe(
+      map((countries) => {
+        if (!searchTerm) {
+          return this.sortCountries(countries);
+        }
+        return this.sortCountries(countries).filter((country: any) => {
+          const countryNameMatches = country.name.common
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase());
+
+          // const capitalMatches =
+          //   country.capital &&
+          //   country.capital.toLowerCase().includes(searchTerm.toLowerCase());
+
+          return countryNameMatches;
+        });
+      })
+    );
   }
 
-  listRegions(): void {
-    this.regions$ = this.countryService.getRegions();
+  sortCountries(countries: any[]): any {
+    return countries.sort((a: any, b: any) => {
+      if (a.name.common < b.name.common) {
+        return -1;
+      }
+      if (a.name.common > b.name.common) {
+        return 1;
+      }
+      return 0;
+    });
   }
 
-  listSubRegions(): void {
-    this.subregions$ = this.countryService.getSubRegions();
+  filterCountries(searchTerm?: string): void {
+    this.listCountries(searchTerm);
   }
-
-  selectRegion(): void {
-    console.log('Region');
-  }
-  selectSubRegion(): void {
-    console.log('SubRegion');
-  }
-
-  // filterCountries(): void {
-  //   const matchedCountries = this.countries.filter((country) => {
-  //     const countryNameMatches = country.name.common
-  //       .toLowerCase()
-  //       .includes(this.searchTerm.toLowerCase());
-
-  //     const capitalMatches =
-  //       country.capital &&
-  //       country.capital.toLowerCase().includes(this.searchTerm.toLowerCase());
-
-  //     return countryNameMatches;
-  //   });
-
-  //   return matchedCountries.length > 0 ? matchedCountries : this.countries;
-  // }
 }
