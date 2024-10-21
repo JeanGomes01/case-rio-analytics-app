@@ -32,7 +32,7 @@
 ## 🚀 Tecnologias Utilizadas
 
 - **Angular**: Framework front-end utilizado para a criação de SPAs.
-- **Chart.js** ou **ngx-charts**: Para a criação de gráficos interativos.
+- **ngx-charts**: Para a criação de gráficos interativos.
 - **TypeScript**: Linguagem para tipagem estática.
 - **HTML5 e CSS3**: Para a construção e estilização do layout responsivo.
 
