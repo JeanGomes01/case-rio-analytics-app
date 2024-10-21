@@ -19,6 +19,14 @@
 <p align="center">Este é o front-end da aplicação **Case Rio Analytics**, desenvolvido com **Angular**. O objetivo do projeto é exibir dados de países a partir de um arquivo JSON, e também apresentar um gráfico interativo para visualização da distribuição da população por região.
  </p>
 
+ <!-- --------------------- -->
+
+## UI UX
+
+|                Tela Desktop                |               Tela Mobile                |
+| :----------------------------------------: | :--------------------------------------: |
+| ![Tela desktop](./public/tela_desktop.png) | ![Tela mobile](./public/tela_mobile.png) |
+
 ## Funcionalidades
 
 - Exibição de uma lista de países com:
@@ -32,9 +40,11 @@
 ## 🚀 Tecnologias Utilizadas
 
 - **Angular**: Framework front-end utilizado para a criação de SPAs.
-- **ngx-charts**: Para a criação de gráficos interativos.
+- **Ngx-charts**: Para a criação de gráficos interativos.
 - **TypeScript**: Linguagem para tipagem estática.
 - **HTML5 e CSS3**: Para a construção e estilização do layout responsivo.
+- **Tailwind** : Para estilização das páginas, responsividade e etc.
+- **JSON-Server** : Simulação de API através de um arquivo JSON.
 
 ## Requisitos
 
@@ -73,9 +83,6 @@ npm start server
 npx json-server src/db.json
 ```
 
-```
-
-```
 
 ### 4. Rodar aplicação Frontend
 
@@ -92,8 +99,8 @@ Isso iniciará o servidor de desenvolvimento e você poderá acessar a aplicaç�
 ```bash
 ├── src
 │   ├── App    # Componentes reutilizáveis da interface
-│   │   ├── country-list    # Componentes reutilizáveis como lista de países e gráficos
-│   │   ├── dashboard-chart # Serviços para consumo de dados do JSON
+│   │   ├── country-list    # Componentes que contém uma tabela que apresenta uma lista de países
+│   │   ├── dashboard-chart # Componentes que apresenta gráfico dos países pela quantidade populacional
 │   │   ├── services      # Serviços para consumo de dados do JSON
 └── README.md             # Documentação do projeto
 ```
@@ -124,15 +131,3 @@ Este projeto é licenciado sob a **MIT License** - veja o arquivo [LICENSE](LICE
 - [x] Melhorar a estilização e responsividade da aplicação.
 
 - [x] Implementar filtros e buscas na lista de países..
-
-- [x] Implementar testes unitários e de integração.
-
-- [x] Configurar deploy contínuo da aplicação.
-
-<!-- --------------------- -->
-
-## UI UX
-
-|                Tela Desktop                |               Tela Mobile                |
-| :----------------------------------------: | :--------------------------------------: |
-| ![Tela desktop](./public/tela_desktop.png) | ![Tela mobile](./public/tela_mobile.png) |
