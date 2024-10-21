@@ -31,23 +31,28 @@ export class DashboardChartComponent implements OnInit {
       value: country.population,
     }));
   }
+
+  isMobile: boolean = false;
+
   itemsPerPage: number = 5;
 
   countries: any[] = [];
   single: any[] = [];
 
-  LegendPosition: LegendPosition.Below;
+  LegendPosition: LegendPosition.Right;
 
   colorScheme: Color = {
     name: 'vivid',
     selectable: true,
     group: ScaleType.Ordinal,
-    domain: [], // Defina as cores conforme necessário
+    domain: [],
   };
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isMobile = window.innerWidth <= 600;
+  }
 
   getItemsToShow(
     countries: any,
