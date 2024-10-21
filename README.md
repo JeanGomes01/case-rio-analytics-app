@@ -16,7 +16,7 @@
   </a>
 </p>
 
-<p align="center">Este é o front-end da aplicação **Case Rio Analytics**, desenvolvido com **Angular**. O objetivo do projeto é exibir dados de países a partir de um arquivo JSON, e também apresentar um gráfico interativo para visualização da distribuição da população por região.
+<p align="center">Este é o front-end da aplicação <b>Case Rio Analytics</b>, desenvolvido com <b>Angular</b>. O objetivo do projeto é exibir dados de países a partir de um arquivo JSON, e também apresentar um gráfico interativo para visualização da distribuição da população por região.
  </p>
 
  <!-- --------------------- -->
@@ -46,6 +46,18 @@
 - **Tailwind** : Para estilização das páginas, responsividade e etc.
 - **JSON-Server** : Simulação de API através de um arquivo JSON.
 
+## Roadmap
+
+- [x] Consumo de dados estáticos do JSON.
+
+- [x] Exibição de lista de países com Nome, Capital, Região, População e Bandeira.
+
+- [x] Implementação de gráfico interativo para visualização da população por região.
+
+- [x] Melhorar a estilização e responsividade da aplicação.
+
+- [x] Implementar filtros e buscas na lista de países..
+
 ## Requisitos
 
 Antes de começar, certifique-se de ter instalado em sua máquina:
@@ -60,7 +72,7 @@ Antes de começar, certifique-se de ter instalado em sua máquina:
 
 ```bash
 git clone https://github.com/JeanGomes01/case-rio-analytics-app.git
-cd case-rio-analytics.app
+cd case-rio-analytics-app
 ```
 
 ### 2. Instalar dependências
@@ -76,13 +88,8 @@ yarn install
 ### 3. Rodar o servidor backend JSON
 
 ```
-ng serve
-
-npm start server
-# ou
-npx json-server src/db.json
+npm run server
 ```
-
 
 ### 4. Rodar aplicação Frontend
 
@@ -108,26 +115,9 @@ Isso iniciará o servidor de desenvolvimento e você poderá acessar a aplicaç�
 ## Scripts Disponíveis
 
 - **`npm run start`**: Executa a aplicação em modo de desenvolvimento.
-- **`npm start server`**: Executa a aplicação backend JSON
+- **`npm run server`**: Executa a aplicação backend JSON
 - **`npm run build`**: Gera a versão otimizada para produção.
-- **`npm test`**: Executa os testes automatizados.
-
-## Contribuindo
-
-Contribuições são sempre bem-vindas! Se você encontrar problemas, sinta-se à vontade para abrir uma issue ou enviar um pull request.
 
 ## Licença
 
 Este projeto é licenciado sob a **MIT License** - veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
-## Roadmap
-
-- [x] Consumo de dados estáticos do JSON.
-
-- [x] Exibição de lista de países com Nome, Capital, Região, População e Bandeira.
-
-- [x] Implementação de gráfico interativo para visualização da população por região.
-
-- [x] Melhorar a estilização e responsividade da aplicação.
-
-- [x] Implementar filtros e buscas na lista de países..
